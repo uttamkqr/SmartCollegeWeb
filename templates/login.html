@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Smart College Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #6b5b95, #feb236);
+            font-family: 'Roboto', sans-serif;
+            animation: gradient 15s ease infinite;
+        }
+
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6b5b95;
+        }
+
+        .input-field {
+            padding-left: 40px; /* Space for icon */
+        }
+
+        .btn {
+            background-color: #6b5b95;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #feb236;
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen">
+    <div class="card p-8 w-96">
+        <h1 class="text-4xl font-bold text-center text-indigo-600 mb-4">Guru Kashi University</h1>
+        <h2 class="text-2xl font-semibold text-center mb-6">Login</h2>
+        {% if error %}
+            <p class="text-red-500 text-center mb-4">{{ error }}</p>
+        {% endif %}
+        <form method="POST" onsubmit="showLoading()">
+            <div class="mb-4 relative">
+                <i class="input-icon fas fa-user"></i>
+                <input type="text" name="username" id="username" required aria-label="Username" placeholder="Username" class="input-field mt-1 block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring focus:ring-indigo-500">
+            </div>
+            <div class="mb-4 relative">
+                <i class="input-icon fas fa-lock"></i>
+                <input type="password" name="password" id="password" required aria-label="Password" placeholder="Password" class="input-field mt-1 block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring focus:ring-indigo-500">
+            </div>
+            <div class="flex items-center mb-4">
+                <input type="checkbox" name="remember" id="remember" class="mr-2" aria-label="Remember Me">
+                <label for="remember" class="text-sm text-gray-600">Remember Me</label>
+            </div>
+            <div>
+                <input type="submit" value="Login" class="w-full btn text-white rounded-md p-2 shadow-md">
+            </div>
+        </form>
+        <div class="mt-4 text-center">
+            <a href="#" class="text-sm text-indigo-600 hover:text-indigo-800 transition duration-200 ease-in-out">Forgot Password?</a>
+        </div>
+        <div id="loading" class="hidden text-center mt-4">
+            <p class="text-gray-600">Logging in...</p>
+            <svg class="animate-spin h-5 w-5 mx-auto text-indigo-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+            </svg>
+        </div>
+    </div>
+
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <script>
+        function showLoading() {
+            document.getElementById('loading').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>

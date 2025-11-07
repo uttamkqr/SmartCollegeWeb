@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Student - Smart College</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            width: 100%;
+        }
+
+        h2 {
+            font-size: 32px;
+            text-align: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .webcam-section {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        #video {
+            width: 100%;
+            max-width: 400px;
+            height: 300px;
+            border-radius: 15px;
+            background: #000;
+            object-fit: cover;
+            margin-bottom: 20px;
+        }
+
+        .capture-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .capture-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        .capture-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .progress-section {
+            display: none;
+            margin: 20px 0;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 30px;
+            background: #e0e0e0;
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        .status-message {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .status-message.success {
+            color: #10b981;
+        }
+
+        .status-message.error {
+            color: #ef4444;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: #f0f0f0;
+            color: #333;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        .back-btn:hover {
+            background: #e0e0e0;
+        }
+
+        .camera-placeholder {
+            width: 100%;
+            max-width: 400px;
+            height: 300px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            margin: 0 auto 20px;
+        }
+
+        .camera-placeholder i {
+            font-size: 64px;
+            margin-bottom: 15px;
+        }
+
+        .info-box {
+            background: #f0f7ff;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .info-box p {
+            margin: 5px 0;
+            font-size: 14px;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2><i class="fas fa-user-plus"></i> Student Registration</h2>
+
+    <div class="info-box">
+        <p><i class="fas fa-info-circle"></i> <strong>Instructions:</strong></p>
+        <p>• Fill in student details below</p>
+        <p>• Allow camera access when prompted</p>
+        <p>• System will capture 30 images automatically</p>
+        <p>• Keep face centered and well-lit</p>
+    </div>
+
+        <form id="registerForm">
+            <div class="form-group">
+                <label><i class="fas fa-user"></i> Full Name *</label>
+                <input type="text" name="name" id="name" placeholder="Enter student's full name" required>
+            </div>
+
+            <div class="form-group">
+                <label><i class="fas fa-id-card"></i> Roll Number *</label>
+                <input type="text" name="roll" id="roll" placeholder="Enter unique roll number" required>
+            </div>
+
+            <div class="form-group">
+                <label><i class="fas fa-envelope"></i> Email Address *</label>
+                <input type="email" name="email" id="email" placeholder="student@example.com" required>
+            </div>
+
+            <div class="form-group">
+                <label><i class="fas fa-phone"></i> Phone Number</label>
+                <input type="tel" name="phone" id="phone" placeholder="Enter phone number (optional)">
+            </div>
+
+            <div class="form-group">
+                <label><i class="fas fa-building"></i> Department</label>
+                <input type="text" name="department" id="department" placeholder="Enter department (optional)">
+            </div>
+
+            <div class="webcam-section">
+                <div id="cameraPlaceholder" class="camera-placeholder">
+                    <i class="fas fa-camera"></i>
+                    <p>Camera will activate when you click capture</p>
+                </div>
+                <video id="video" autoplay playsinline style="display:none;"></video>
+                <button type="button" class="capture-btn" id="captureBtn" onclick="startCapture()">
+                    <i class="fas fa-camera"></i> Start Capture & Register
+                </button>
+            </div>
+
+            <div class="progress-section" id="progressSection">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill">0%</div>
+                </div>
+                <div class="status-message" id="statusMessage">Initializing...</div>
+            </div>
+        </form>
+
+        <div style="text-align: center;">
+            <a href="/dashboard" class="back-btn">
+                <i class="fas fa-arrow-left"></i> Back to Dashboard
+            </a>
+        </div>
+    </div>
+
+    <script>
+        const video = document.getElementById('video');
+        const cameraPlaceholder = document.getElementById('cameraPlaceholder');
+        const progressSection = document.getElementById('progressSection');
+        const progressFill = document.getElementById('progressFill');
+        const statusMessage = document.getElementById('statusMessage');
+        const captureBtn = document.getElementById('captureBtn');
+        let stream = null;
+        let capturedImages = [];
+
+        async function startCapture() {
+            // Validate form first
+            const name = document.getElementById('name').value.trim();
+            const roll = document.getElementById('roll').value.trim();
+            const email = document.getElementById('email').value.trim();
+
+            if (!name || !roll || !email) {
+                alert('Please fill in all required fields (Name, Roll Number, Email)');
+                return;
+            }
+
+            // Disable button
+            captureBtn.disabled = true;
+            captureBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Initializing Camera...';
+
+            try {
+                // Request camera access
+                stream = await navigator.mediaDevices.getUserMedia({
+                    video: {
+                        width: {ideal: 640},
+                        height: {ideal: 480}
+                    }
+                });
+
+                video.srcObject = stream;
+                video.style.display = 'block';
+                cameraPlaceholder.style.display = 'none';
+
+                // Wait for video to be ready
+                await new Promise(resolve => {
+                    video.onloadedmetadata = () => {
+                        resolve();
+                    };
+                });
+
+                // Show progress
+                progressSection.style.display = 'block';
+                captureBtn.innerHTML = '<i class="fas fa-camera"></i> Capturing...';
+
+                // Capture images
+                await captureImages();
+
+                // Upload
+                await uploadData(name, roll, email);
+
+            } catch (err) {
+                console.error('Error:', err);
+                statusMessage.className = 'status-message error';
+                statusMessage.textContent = ' Error: ' + err.message;
+                captureBtn.disabled = false;
+                captureBtn.innerHTML = '<i class="fas fa-camera"></i> Try Again';
+            }
+        }
+
+        async function captureImages() {
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            capturedImages = [];
+
+            const totalImages = 30;
+
+            for (let i = 0; i < totalImages; i++) {
+                // Draw current video frame
+                ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+                // Convert to base64
+                const imageData = canvas.toDataURL('image/jpeg', 0.8);
+                capturedImages.push(imageData);
+
+                // Update progress
+                const progress = Math.round(((i + 1) / totalImages) * 100);
+                progressFill.style.width = progress + '%';
+                progressFill.textContent = progress + '%';
+                statusMessage.textContent = ` Capturing image ${i + 1}/${totalImages}`;
+
+                // Wait a bit between captures
+                await new Promise(resolve => setTimeout(resolve, 100));
+            }
+
+            // Stop camera
+            if (stream) {
+                stream.getTracks().forEach(track => track.stop());
+            }
+            video.style.display = 'none';
+
+            statusMessage.textContent = ' All images captured! Uploading...';
+        }
+
+        async function uploadData(name, roll, email) {
+            const phone = document.getElementById('phone').value.trim();
+            const department = document.getElementById('department').value.trim();
+
+            const formData = new FormData();
+            formData.append('name', name);
+            formData.append('roll', roll);
+            formData.append('email', email);
+            if (phone) formData.append('phone', phone);
+            if (department) formData.append('department', department);
+
+            // Append images
+            capturedImages.forEach((img, index) => {
+                formData.append(`image_${index}`, img);
+            });
+
+            try {
+                statusMessage.textContent = ' Uploading and training model...';
+
+                const response = await fetch('/register', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.json();
+
+                if (response.ok && result.success) {
+                    statusMessage.className = 'status-message success';
+                    statusMessage.innerHTML = `✅ ${result.message}<br>${result.training_message || ''}`;
+
+                    // Reset form after 2 seconds
+                    setTimeout(() => {
+                        window.location.href = '/dashboard';
+                    }, 2000);
+                } else {
+                    throw new Error(result.message || 'Registration failed');
+                }
+
+            } catch (err) {
+                statusMessage.className = 'status-message error';
+                statusMessage.textContent = '❌ Upload failed: ' + err.message;
+                captureBtn.disabled = false;
+                captureBtn.innerHTML = '<i class="fas fa-camera"></i> Try Again';
+
+                // Allow retrying
+                progressFill.style.width = '0%';
+                progressFill.textContent = '0%';
+            }
+        }
+    </script>
+</body>
+</html>

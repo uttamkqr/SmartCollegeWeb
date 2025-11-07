@@ -1,0 +1,2 @@
+# This file ensures the recognizer directory is tracked by Git
+# Trained models will be stored here but are excluded from version control
