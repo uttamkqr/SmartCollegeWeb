@@ -33,6 +33,114 @@ code support, analytics, and email notifications.
 - 👤 **Student Profile Management** with history
 - 📧 **Enhanced Email Templates** with HTML styling
 
+## ⚡ Quick Start (Complete Setup Commands)
+
+Follow these commands in sequence for hassle-free setup:
+
+### Step 1: Clone and Navigate
+
+```bash
+git clone https://github.com/uttamkqr/SmartCollegeWeb.git
+cd SmartCollegeWeb
+```
+
+### Step 2: Create Virtual Environment
+
+```bash
+# Create virtual environment
+python -m venv venv
+
+# Activate virtual environment (Windows)
+venv\Scripts\activate
+
+# Activate virtual environment (Linux/Mac)
+source venv/bin/activate
+```
+
+### Step 3: Install Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+### Step 4: Setup MySQL Database
+
+```bash
+# Login to MySQL (enter your password when prompted)
+mysql -u root -p
+
+# In MySQL prompt, run these commands:
+CREATE DATABASE smart_attendance;
+EXIT;
+```
+
+### Step 5: Configure Environment
+
+```bash
+# Copy example environment file
+copy .env.example .env
+
+# Edit .env file and update these values:
+# DB_PASSWORD=your_mysql_password
+# EMAIL_USER=your_email@gmail.com
+# EMAIL_PASS=your_gmail_app_password
+```
+
+**Note:** Open `.env` in a text editor and update:
+
+- `DB_PASSWORD` - Your MySQL password
+- `EMAIL_USER` - Your Gmail address
+- `EMAIL_PASS` - Gmail App Password (generate from https://myaccount.google.com/apppasswords)
+
+### Step 6: Initialize Database Tables
+
+```bash
+python fix_database.py
+```
+
+### Step 7: Run the Application
+
+```bash
+python app.py
+```
+
+### Step 8: Access the Application
+
+Open your browser and go to: **http://localhost:5000**
+
+**Default Login:**
+
+- Username: `admin`
+- Password: `admin123`
+
+---
+
+## 🔄 One-Line Complete Setup (After Git Clone)
+
+For quick setup, run these commands one by one:
+
+```bash
+# Windows Users
+python -m venv venv
+venv\Scripts\activate
+pip install -r requirements.txt
+copy .env.example .env
+echo Remember to edit .env with your credentials!
+python fix_database.py
+python app.py
+```
+
+```bash
+# Linux/Mac Users
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+cp .env.example .env
+echo "Remember to edit .env with your credentials!"
+python fix_database.py
+python app.py
+```
+
 ## 📋 Prerequisites
 
 - Python 3.8 or higher
@@ -266,7 +374,8 @@ scaleFactor = 1.1  # Lower = more sensitive (1.1 - 1.3)
 minNeighbors = 5  # Higher = fewer false positives (3 - 6)
 
 # Recognition threshold
-confidence < 70  # Lower = stricter matching (50 - 80)
+# Example: if confidence < 70 then accept match
+# Lower value = stricter matching (range: 50 - 80)
 ```
 
 ### Attendance Time Rules
@@ -275,8 +384,9 @@ Edit `utils/attendance_utils.py`:
 
 ```python
 # Late arrival time (default: 9:15 AM)
-if time_now.hour > 9 or (time_now.hour == 9 and time_now.minute > 15):
-    status = 'Late'
+# Example logic:
+# if time_now.hour > 9 or (time_now.hour == 9 and time_now.minute > 15):
+#     status = 'Late'
 ```
 
 ## 🐛 Troubleshooting
